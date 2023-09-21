@@ -58,8 +58,12 @@ public class HTTPClient {
             completion(.failure(HTTPClientErrors.failedToOpenBatch))
             return nil
         }
-          
-        let urlRequest = configuredRequest(for: uploadURL, method: "POST")
+
+        var urlRequest = configuredRequest(for: uploadURL, method: "POST")
+        urlRequest.addValue("Bearer \(writeKey)", forHTTPHeaderField: "Authorization")
+        print("SEG URL", uploadURL)
+        print("SEG REQUEST", urlRequest)
+        //request.addHeader(key: "Authorization", value: "Bearer \(token.value)")
 
         let dataTask = session.uploadTask(with: urlRequest, fromFile: batch) { [weak self] (data, response, error) in
             if let error = error {
@@ -78,6 +82,8 @@ public class HTTPClient {
                     self?.analytics?.reportInternalError(AnalyticsError.networkServerLimited(httpResponse.statusCode))
                     completion(.failure(HTTPClientErrors.statusCode(code: httpResponse.statusCode)))
                 default:
+                    print("SEG ERROR", response.debugDescription)
+                    print("SEG RESPONSE", httpResponse.debugDescription)
                     self?.analytics?.reportInternalError(AnalyticsError.networkServerRejected(httpResponse.statusCode))
                     completion(.failure(HTTPClientErrors.statusCode(code: httpResponse.statusCode)))
                 }
