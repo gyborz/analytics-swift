@@ -138,7 +138,7 @@ public extension Configuration {
     /// - Returns: The current Configuration.
     @discardableResult
     func apiHost(_ value: String) -> Configuration {
-        values.apiHost = value + "/v1"
+        values.apiHost = value
         return self
     }
     
