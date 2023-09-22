@@ -88,6 +88,7 @@ public struct Settings: Codable {
     }
 
     public func hasIntegrationSettings(key: String) -> Bool {
+        return true
         guard let settings = integrations?.dictionaryValue else { return false }
         return (settings[key] != nil)
     }

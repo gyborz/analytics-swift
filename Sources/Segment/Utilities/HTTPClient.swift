@@ -60,10 +60,6 @@ public class HTTPClient {
         }
 
         var urlRequest = configuredRequest(for: uploadURL, method: "POST")
-        urlRequest.addValue("Bearer \(writeKey)", forHTTPHeaderField: "Authorization")
-        print("SEG URL", uploadURL)
-        print("SEG REQUEST", urlRequest)
-        //request.addHeader(key: "Authorization", value: "Bearer \(token.value)")
 
         let dataTask = session.uploadTask(with: urlRequest, fromFile: batch) { [weak self] (data, response, error) in
             if let error = error {
